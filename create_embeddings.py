@@ -4,7 +4,6 @@ import streamlit as st
 
 # Set your OpenAI API key
 openai.api_key = st.secrets["OPENAI_API_KEY"]
-
 client = openai.OpenAI()
 
 # Define a function to get embeddings using OpenAI API

@@ -24,6 +24,7 @@ class custom_cypher_vector_answer_search_Tool(BaseTool):
         stripped_query = query.strip('?')
         print(f"### query is: {stripped_query}")
         query_embedding = get_embeddings(stripped_query)
+        # print(f"### query_embedding is: {query_embedding}")
         # Retrieve "Question" nodes with a "text" property similarity match
         with driver.session() as session:
             result = session.run(
@@ -31,15 +32,17 @@ class custom_cypher_vector_answer_search_Tool(BaseTool):
                 CALL db.index.vector.queryNodes('questions', 1, {query_embedding})
                 YIELD node AS similarQuestion, score
 
-                MATCH (q:Question {{text:'{stripped_query}'}})-[r:has_answer]-(a:Answer)
+                MATCH (q:Question {{text:similarQuestion.text}})-[r:has_answer]-(a:Answer)
                 RETURN q.text, a.text
                 """
-                # MATCH (similarQuestion)
-                # RETURN similarQuestion.text AS question, score
+                # f"""
+                # MATCH (q:Question {{text:'{stripped_query}'}})-[r:has_answer]-(a:Answer)
+                # RETURN q.text, a.text
+                # """
             )
             for record in result:
                 print(f"record.data() is: {record.data()}")
-                answer = "Answer: " + record.data()["a.text"] + "\n"
+                answer = "Answer: " + record.data()["a.text"]
         # Close the Neo4j driver
         driver.close()
         print(f"### answer is: {answer}")
