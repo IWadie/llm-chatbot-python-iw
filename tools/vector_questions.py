@@ -1,13 +1,14 @@
 from langchain.vectorstores.neo4j_vector import Neo4jVector
 from llm import llm, embeddings
 from langchain.chains import RetrievalQA
+import os
 import streamlit as st
 
 neo4jvector = Neo4jVector.from_existing_index(
     embeddings,                               # (1)
-    url=st.secrets["NEO4J_URI"],              # (2)
-    username=st.secrets["NEO4J_USERNAME"],    # (3)
-    password=st.secrets["NEO4J_PASSWORD"],    # (4)
+    url=os.environ["NEO4J_URI"],              # (2)
+    username=os.environ["NEO4J_USERNAME"],    # (3)
+    password=os.environ["NEO4J_PASSWORD"],    # (4)
     index_name="questions",                   # (5)
     node_label="Question",                    # (6)
     text_node_property="text",                # (7)

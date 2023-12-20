@@ -6,11 +6,12 @@ from langchain.callbacks.manager import (
 )
 from neo4j import GraphDatabase
 from llm import get_embeddings
+import os
 import streamlit as st
 
-uri = st.secrets["NEO4J_URI"]
-user = st.secrets["NEO4J_USERNAME"]
-password = st.secrets["NEO4J_PASSWORD"]
+uri = os.environ["NEO4J_URI"]
+user = os.environ["NEO4J_USERNAME"]
+password = os.environ["NEO4J_PASSWORD"]
 driver = GraphDatabase.driver(uri, auth=(user, password))
 
 class custom_cypher_vector_search_Tool(BaseTool):

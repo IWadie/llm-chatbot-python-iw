@@ -1,9 +1,10 @@
 from neo4j import GraphDatabase
 import openai
 import streamlit as st
+import os
 
 # Set your OpenAI API key
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_key = os.environ["OPENAI_API_KEY"]
 client = openai.OpenAI()
 
 # Define a function to get embeddings using OpenAI API

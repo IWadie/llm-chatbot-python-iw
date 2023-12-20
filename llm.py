@@ -2,18 +2,19 @@ import streamlit as st
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings import OpenAIEmbeddings
 import openai
+import os
 
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_key = os.environ["OPENAI_API_KEY"]
 client = openai.OpenAI()
 
 llm = ChatOpenAI(
-    openai_api_key=st.secrets["OPENAI_API_KEY"],
-    model=st.secrets["OPENAI_MODEL"],
+    openai_api_key=os.environ["OPENAI_API_KEY"],
+    model=os.environ["OPENAI_MODEL"],
     temperature=0
 )
 
 embeddings = OpenAIEmbeddings(
-    openai_api_key=st.secrets["OPENAI_API_KEY"]
+    openai_api_key=os.environ["OPENAI_API_KEY"]
 )
 
 def get_embeddings(text, model="text-embedding-ada-002"):
