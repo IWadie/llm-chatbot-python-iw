@@ -1,1 +1,1 @@
-streamlit run bot.py
+web: streamlit run bot.py
